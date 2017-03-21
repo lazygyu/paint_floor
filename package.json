@@ -1,0 +1,16 @@
+{
+  "name": "painting_floor",
+  "version": "1.0.0",
+  "description": "",
+  "main": "webpack.config.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "babili-webpack-plugin": "0.0.11",
+    "webpack": "^2.2.1"
+  }
+}
