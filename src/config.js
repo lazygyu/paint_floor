@@ -1,4 +1,4 @@
-const tile_size = 16;
+const tile_size = 30;
 
 const tile_source = {
   0: { sx: 0, sy: 0},

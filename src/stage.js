@@ -1,5 +1,6 @@
 import Tile from './tile.js';
 import * as config from './config.js';
+import stageData from './stagedata.js';
 
 const stageImageSrc = 'images/stage.png';
 
@@ -15,11 +16,14 @@ class Stage{
     this.canvas.width = config.tile_size * 10;
     this.canvas.height = config.tile_size * 10;
 
+    this.startX = stageData[0].start.x;
+    this.startY = stageData[0].start.y;
+
 
     for (let y = 0; y < this.height; y++){
       this.tiles[y] = [];
       for (let x = 0; x < this.width; x++){
-        this.tiles[y][x] = new Tile(0);
+        this.tiles[y][x] = new Tile(stageData[0].tiles[y][x]);
       }
     }
   }
@@ -37,6 +41,17 @@ class Stage{
 
   render(ctx) {
     ctx.drawImage(this.canvas, 0, 0);
+  }
+
+  canGo(x, y, dir) {
+    return this.tiles[y][x].painted === false || this.tiles[y][x].direction === dir;
+  }
+
+  leave(x, y, dir) {
+    
+  }
+  reach(x, y) {
+    
   }
 }
 

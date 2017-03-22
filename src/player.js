@@ -4,8 +4,8 @@ import Animation from './animation.js';
 
 const imageUrl = "images/character.png";
 const animationDefs = [
-  { 'stand': { duration: .5, loop: true, frames: [0, 1] } },
-  { 'stand': { duration: .5, loop: true, frames: [8, 9] } },
+  { 'stand': { duration: .5, loop: true, frames: [0, 1, 2, 3] } },
+  { 'stand': { duration: .5, loop: true, frames: [8, 9, 10, 11] } },
   { 'stand': { duration: .5, loop: true, frames: [16, 17] } },
   { 'stand': { duration: .5, loop: true, frames: [24, 25] } }
 ];
@@ -23,7 +23,7 @@ class Player{
     this.img = new Image();
     this.img.src = imageUrl;
 
-    let spr = new SpriteSheet(this.img, 20, 30);
+    let spr = new SpriteSheet(this.img, 36, 36);
     
     let standAnimations = [];
     animationDefs.forEach(a => { 
@@ -33,9 +33,26 @@ class Player{
     this.animations = { stand: standAnimations };
   }
 
-  update(delta) {
+  setPos(x, y) {
+    this.x = x;
+    this.y = y;
+    this.targetX = x;
+    this.targetY = y;
+  }
+
+  update(delta, key) {
     this.elapsed += delta;
     this.animations[this.state][this.direction].update(delta);
+
+    if (key.isDown(37)) {
+      this.direction = 2;
+    } else if (key.isDown(38)) {
+      this.direction = 3;
+    } else if (key.isDown(39)) {
+      this.direction = 1;
+    } else if (key.isDown(40)) {
+      this.direction = 0;
+    }
   }
 
   render(ctx, delta) {
