@@ -6,8 +6,8 @@ const imageUrl = "images/character.png";
 const animationDefs = [
   { 'stand': { duration: .5, loop: true, frames: [0, 1, 2, 3] } },
   { 'stand': { duration: .5, loop: true, frames: [8, 9, 10, 11] } },
-  { 'stand': { duration: .5, loop: true, frames: [16, 17] } },
-  { 'stand': { duration: .5, loop: true, frames: [24, 25] } }
+  { 'stand': { duration: .5, loop: true, frames: [0, 1, 2, 3] } },
+  { 'stand': { duration: .5, loop: true, frames: [0, 1, 2, 3] } }
 ];
 
 
@@ -44,14 +44,36 @@ class Player{
     this.elapsed += delta;
     this.animations[this.state][this.direction].update(delta);
 
-    if (key.isDown(37)) {
+    if (key.isPress(37)) {
       this.direction = 2;
-    } else if (key.isDown(38)) {
+      if( this.parent.stage.canGo(this.x - 1, this.y, this.direction) ){
+        this.parent.stage.leave(this.x, this.y, this.direction);
+        this.parent.stage.reach(this.x-1, this.y, this.direction);
+        this.x--;
+      } else{
+
+      }
+    } else if (key.isPress(38)) {
       this.direction = 3;
-    } else if (key.isDown(39)) {
+      if( this.parent.stage.canGo(this.x, this.y-1, this.direction)){
+        this.parent.stage.leave(this.x, this.y, this.direction);
+        this.parent.stage.reach(this.x, this.y-1, this.direction);
+        this.y--;
+      }
+    } else if (key.isPress(39)) {
       this.direction = 1;
-    } else if (key.isDown(40)) {
+      if( this.parent.stage.canGo(this.x+1, this.y, this.direction)){
+        this.parent.stage.leave(this.x, this.y, this.direction);
+        this.parent.stage.reach(this.x+1, this.y, this.direction);
+        this.x++;
+      }
+    } else if (key.isPress(40)) {
       this.direction = 0;
+      if( this.parent.stage.canGo(this.x, this.y+1, this.direction)){
+        this.parent.stage.leave(this.x, this.y, this.direction);
+        this.parent.stage.reach(this.x, this.y+1, this.direction);
+        this.y++;
+      }
     }
   }
 
@@ -60,7 +82,7 @@ class Player{
     ctx.save();
     ctx.translate(rx, ry);
     //ctx.drawImage(this.img, 0, this.direction * 30, 20, 30, 0, -15, 20, 30);
-    this.animations[this.state][this.direction].draw(ctx, -2, -15);
+    this.animations[this.state][this.direction].draw(ctx, -3, -16);
     ctx.restore();
   }
 }
