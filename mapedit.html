@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+    div.cell {
+        display:block;
+		float:left;
+        width:28px;
+        height:28px;
+        border:solid 1px #333;
+		margin:0;
+		padding:0;
+    }
+	div.cell.on {
+		background-color:#9cf;
+	}
+	div#map {
+		width:300px;
+		height:300px;
+	}
+	
+</style>
+</head>
+<body>
+    <div id="map"></div>
+    <div id="info">
+        <textarea id="log" width="300" height="300"></textarea>
+    </div>
+    <script type="text/javascript">
+        var $ = document.querySelector.bind(document);
+        var $$ = document.createElement.bind(document);
+        var map = [];
+        var start = null;
+        function init(){
+            map = [];
+            $("#map").innerHTML = "";
+            for(var y=0;y<10;y++){
+                map.push([]);
+                for(var x=0;x<10;x++){
+                    var dv = $$("div");
+                    dv.className = "cell";
+					dv.y = y;
+					dv.x = x;
+                    map[y].push(0);
+					$("#map").appendChild(dv);
+                }
+            }
+        }
+
+		function toString(){
+			var str = JSON.stringify(map);
+			$("#log").value = str;
+		}
+
+
+		init();
+		$("#map").addEventListener("click", function(e){
+			if( e.target.classList.contains("cell") ){
+				var el = e.target;
+				el.classList.toggle("on");
+				if( el.classList.contains("on") ){
+					map[el.y][el.x] = 1;
+				}else{
+					map[el.y][el.x] = 0;
+				}
+				toString();
+			}
+		});
+        
+    </script>
+</body>
+</html>

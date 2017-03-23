@@ -12,19 +12,20 @@ class Stage{
     this.img = new Image();
     this.img.src = stageImageSrc;
     this.level = level || 1;
+    this.time = stageData[this.level - 1].time;
 
     this.canvas = document.createElement("canvas");
     this.canvas.width = config.tile_size * 10;
     this.canvas.height = config.tile_size * 10;
 
-    this.startX = stageData[0].start.x;
-    this.startY = stageData[0].start.y;
+    this.startX = stageData[this.level-1].start.x;
+    this.startY = stageData[this.level-1].start.y;
 
 
     for (let y = 0; y < this.height; y++){
       this.tiles[y] = [];
       for (let x = 0; x < this.width; x++){
-        this.tiles[y][x] = new Tile(stageData[0].tiles[y][x]|0);
+        this.tiles[y][x] = new Tile(stageData[this.level-1].tiles[y][x]|0);
       }
     }
     this.tiles[this.startY][this.startX].painted = true;
@@ -56,6 +57,14 @@ class Stage{
     ctx.drawImage(this.canvas, 0, 0);
   }
 
+  isClear() {
+    return !this.tiles.some(arr => arr.some(t => t.type === 1 && !t.painted));
+  }
+
+  reset() {
+    this.tiles.forEach(row => row.forEach(t => { t.painted = false; t.direction = null; }));
+  }
+
   getOppositeDirection(dir){
     switch(dir){
       case 0: return 3;
@@ -66,7 +75,7 @@ class Stage{
   }
 
   canGo(x, y, dir) {
-    console.log("can go : {0}, {1}", x, y);
+    
     if( x < 0 || y < 0 || x >= this.width || y >= this.height ) return false;
     return this.tiles[y][x].type === 1 && (this.tiles[y][x].painted === false || this.tiles[y][x].direction === this.getOppositeDirection(dir));
   }
