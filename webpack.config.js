@@ -12,6 +12,11 @@ module.exports = {
     path: path.resolve(__dirname, "dist"),
     filename: 'game.min.js'
   },
+  module:{
+    loaders:[
+      {test:/\.js$/, loader: 'babel-loader?presets[]=es2015'}
+    ]
+  },
   plugins: isProd ? [
     new BabiliPlugin()
   ] : []
