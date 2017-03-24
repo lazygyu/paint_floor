@@ -13,7 +13,7 @@ const animationDefs = [
 
 class Player{
   constructor() {
-    this.direction = 0;
+    this.direction = 2;
     this.state = 'stand';
     this.x = 0;
     this.y = 0;
