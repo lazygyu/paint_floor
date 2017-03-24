@@ -97,7 +97,7 @@ class Game {
       this.last = performance.now() / 1000;
       this.current = performance.now() / 1000;
       this.stage.showGrid = true;
-    } else if (this.state === 2) {
+    } else if (this.state === 2 || this.state === 1) {
       this.retry();
     }  
   }
