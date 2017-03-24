@@ -159,10 +159,11 @@ class Game {
         this.ctx.strokeText("READY", this.canv.width / 2, this.canv.height / 2);
         this.ctx.fillText("READY", this.canv.width / 2, this.canv.height / 2);
       }
-      if (this.elapsed < 2)
+      if (this.elapsed < 2){
         this.ctx.globalAlpha = Math.sin(Math.max(0, (this.elapsed - 1.4) / 0.6));
-      this.ctx.strokeText("START", this.canv.width / 2, this.canv.height / 2);
-      this.ctx.fillText("START", this.canv.width / 2, this.canv.height / 2);
+        this.ctx.strokeText("START", this.canv.width / 2, this.canv.height / 2);
+        this.ctx.fillText("START", this.canv.width / 2, this.canv.height / 2);
+      }
       this.ctx.restore();
       if (this.elapsed >= 2) {
         this.state = 1;
