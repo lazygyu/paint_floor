@@ -168,6 +168,7 @@ class Game {
       if (this.elapsed >= 2) {
         this.state = 1;
         this.elapsed = 0;
+        this.timeRemain = this.stage.time;
       }
     } else if (this.state === 1) {
       this.ctx.fillStyle = "yellowgreen";
