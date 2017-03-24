@@ -21,6 +21,8 @@ class Stage{
     this.startX = stageData[this.level-1].start.x;
     this.startY = stageData[this.level-1].start.y;
 
+    this.showGrid = false;
+
 
     for (let y = 0; y < this.height; y++){
       this.tiles[y] = [];
@@ -50,6 +52,20 @@ class Stage{
         }
         ctx.drawImage(this.img, src.sx, src.sy, config.tile_size, config.tile_size, x * config.tile_size, y * config.tile_size, config.tile_size, config.tile_size);
       }
+    }
+    if(this.showGrid){
+    ctx.beginPath();
+    ctx.strokeStyle = "rgba(255,255,255,0.3)";
+    ctx.lineWidth = 0.5;
+    for(let y=0;y<=this.height;y++){
+      ctx.moveTo(0, y*config.tile_size);
+      ctx.lineTo(this.width*config.tile_size, y*config.tile_size);
+    }
+    for(let x=0;x<=this.width;x++){
+      ctx.moveTo(x*config.tile_size, 0);
+      ctx.lineTo(x*config.tile_size, this.height*config.tile_size);
+    }
+    ctx.stroke();
     }
   }
 

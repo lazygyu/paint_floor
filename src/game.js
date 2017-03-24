@@ -81,6 +81,7 @@ class Game {
 
   setStage() {
     this.stage = new Stage(this.stage.level + 1);
+    this.stage.showGrid = true;
     this.children[0] = this.stage;
     this.state = 0;
     this.elapsed = 0;
@@ -95,6 +96,7 @@ class Game {
       this.pause = false;
       this.last = performance.now() / 1000;
       this.current = performance.now() / 1000;
+      this.stage.showGrid = true;
     } else if (this.state === 2) {
       this.retry();
     }  
