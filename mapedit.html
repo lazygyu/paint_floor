@@ -48,7 +48,7 @@
         }
 
 		function toString(){
-			var str = JSON.stringify(map);
+			var str = JSON.stringify({start:start, time:0, tiles:map});
 			$("#log").value = str;
 		}
 
@@ -62,6 +62,9 @@
 					map[el.y][el.x] = 1;
 				}else{
 					map[el.y][el.x] = 0;
+				}
+				if(start === null ){
+					start = {x:el.x,y:el.y};
 				}
 				toString();
 			}
