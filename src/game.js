@@ -82,7 +82,7 @@ class Game {
   }
 
   setStage() {
-    if (this.stage.level === 26) {
+    if (this.stage.level === 25) {
       this.allClear = true;
       this.state = 4;
     } else {
