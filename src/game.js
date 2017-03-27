@@ -37,6 +37,7 @@ class Game {
     this.canv = __$("canvas");
     this.canv.width = 320;
     this.canv.height = 340;
+    if( !this.canv.getContext ) return null;
     this.ctx = this.canv.getContext("2d");
 
     container.appendChild(this.canv);
