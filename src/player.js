@@ -4,10 +4,10 @@ import Animation from './animation.js';
 
 const imageUrl = "images/character.png";
 const animationDefs = [
-  { 'stand': { duration: .5, loop: true, frames: [0, 1, 2, 3] } },
-  { 'stand': { duration: .5, loop: true, frames: [8, 9, 10, 11] } },
-  { 'stand': { duration: .5, loop: true, frames: [16, 17, 18, 19] } },
-  { 'stand': { duration: .5, loop: true, frames: [24, 25, 26, 27] } }
+  { 'stand': { duration: .5, loop: true, frames: [0, 1, 2, 3] }, dance:{duration:2, loop:true, frames:[12, 13, 14, 20, 21]} },
+  { 'stand': { duration: .5, loop: true, frames: [8, 9, 10, 11] }, dance:{duration:2, loop:true, frames:[12, 13, 14, 20, 21]}  },
+  { 'stand': { duration: .5, loop: true, frames: [16, 17, 18, 19] }, dance:{duration:2, loop:true, frames:[12, 13, 14, 20, 21]}  },
+  { 'stand': { duration: .5, loop: true, frames: [24, 25, 26, 27] }, dance:{duration:2, loop:true, frames:[12, 13, 14, 20, 21]}  },
 ];
 
 
@@ -28,11 +28,14 @@ class Player{
     let spr = new SpriteSheet(this.img, 36, 36);
     
     let standAnimations = [];
+    let danceAnimations = [];
     animationDefs.forEach(a => { 
       let anim = new Animation(spr, a.stand.frames, a.stand.duration, a.stand.loop);
+      let dance = new Animation(spr, a.dance.frames, a.dance.duration, a.dance.loop);
       standAnimations.push(anim);
+      danceAnimations.push(dance);
     });
-    this.animations = { stand: standAnimations };
+    this.animations = { stand: standAnimations, dance:danceAnimations };
   }
 
   setPos(x, y) {
@@ -46,6 +49,9 @@ class Player{
 
   update(delta, key) {
     this.elapsed += delta;
+    if (this.parent.allClear) {
+      this.state = "dance";
+    }
     this.animations[this.state][this.direction].update(delta);
     if (this.x === this.targetX && this.y === this.targetY) {
       if (key.isDown(37)) {
@@ -90,9 +96,9 @@ class Player{
     } else {
       var w = (this.targetX - this.x) * config.tile_size;
       var h = (this.targetY - this.y) * config.tile_size;
-      this.rx = (this.x * config.tile_size) + (w * this.elapsed / 0.1);
-      this.ry = (this.y * config.tile_size) + (h * this.elapsed / 0.1);
-      if (this.elapsed >= 0.1) {
+      this.rx = (this.x * config.tile_size) + (w * this.elapsed / 0.15);
+      this.ry = (this.y * config.tile_size) + (h * this.elapsed / 0.15);
+      if (this.elapsed >= 0.15) {
         this.x = this.targetX;
         this.y = this.targetY;
         this.rx = this.x * config.tile_size;
@@ -105,7 +111,38 @@ class Player{
     ctx.save();
     ctx.translate(this.rx, this.ry);
     //ctx.drawImage(this.img, 0, this.direction * 30, 20, 30, 0, -15, 20, 30);
-    this.animations[this.state][this.direction].draw(ctx, -3, -16);
+    if (this.state == "dance") {
+      ctx.fillStyle = "#282b34";
+      ctx.fillRect(-25, -50, 90, 30);
+      ctx.lineWidth = 1;
+      ctx.strokeStyle = "#625e7f";
+      ctx.strokeRect(-24, -49, 88, 28);
+      ctx.fillStyle = "white";
+      ctx.font = "12px sans-serif";
+      ctx.textAlign = "center";
+      ctx.fillText("싹틔워봅시다", 18, -30);
+      let x = 0, y = 0;
+      switch (this.animations[this.state][this.direction].cur) {
+        case 0:
+          x = 5; y = -25;  
+          break;
+        case 1:
+          x = 10; y = 15;  
+          break;
+        case 2:
+          x = -15; y = -16;
+          break;
+        case 3:
+          x = -5; y = -20;  
+          break;
+        case 4:
+          x = -3; y = 10;  
+          break;
+      }
+      this.animations[this.state][this.direction].draw(ctx, x, y);
+    } else {
+      this.animations[this.state][this.direction].draw(ctx, -3, -16);
+    }
     ctx.restore();
   }
 }

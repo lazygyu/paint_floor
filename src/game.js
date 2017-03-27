@@ -55,6 +55,7 @@ class Game {
     this.current = performance.now() / 1000;
     this.elapsed = 0;
     this.timeRemain = 10;
+    this.allClear = false;
 
     requestAnimationFrame(this.update.bind(this));
 
@@ -81,13 +82,18 @@ class Game {
   }
 
   setStage() {
-    this.stage = new Stage(this.stage.level + 1);
-    this.stage.showGrid = true;
-    this.children[0] = this.stage;
-    this.state = 0;
-    this.elapsed = 0;
-    this.player.setPos(this.stage.startX, this.stage.startY);
-    this.timeRemain = this.stage.time;
+    if (this.stage.level === 26) {
+      this.allClear = true;
+      this.state = 4;
+    } else {
+      this.stage = new Stage(this.stage.level + 1);
+      this.stage.showGrid = true;
+      this.children[0] = this.stage;
+      this.state = 0;
+      this.elapsed = 0;
+      this.player.setPos(this.stage.startX, this.stage.startY);
+      this.timeRemain = this.stage.time;
+    }  
   }
 
   focus() {
@@ -174,8 +180,11 @@ class Game {
         this.timeRemain = this.stage.time;
       }
     } else if (this.state === 1) {
-      this.ctx.fillStyle = "yellowgreen";
+      this.ctx.fillStyle = "hsl("+(this.timeRemain / this.stage.time * 120)+", 100%, 50%)";
       this.ctx.fillRect(paddingLeft, 300 + paddingTop, 300 * (this.timeRemain / this.stage.time), 10);
+      this.ctx.fillStyle = "white";
+      this.ctx.font = "12px monospace";
+      this.ctx.fillText("Stage " + this.stage.level, 0, 12);
       if (this.timeRemain <= 0) {
         this.state = 2;
       }
@@ -211,6 +220,8 @@ class Game {
         this.ctx.fillText("CLEAR", this.canv.width / 2, this.canv.height / 2);
         this.ctx.restore();
       }
+    } else if (this.state === 4) {
+      
     }
     this.key.update(this.keys);
     requestAnimationFrame(this.update.bind(this));

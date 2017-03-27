@@ -70,7 +70,9 @@ class Stage{
   }
 
   render(ctx) {
+    
     ctx.drawImage(this.canvas, 0, 0);
+    
   }
 
   isClear() {
