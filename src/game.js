@@ -4,6 +4,8 @@ const _$ = document.querySelector.bind(document);
 const __$ = document.createElement.bind(document);
 const paddingTop = 20, paddingLeft = 0;
 
+const clearImageSrc = 'images/clear.png';
+
 class Key {
   constructor() {
     this.key = {};
@@ -50,6 +52,9 @@ class Game {
     this.player = new Player();
     this.children.push(this.player);
     this.player.setPos(this.stage.startX, this.stage.startY);
+
+    this.clearImage = new Image();
+    this.clearImage.src = clearImageSrc;
 
     this.last = performance.now() / 1000;
     this.current = performance.now() / 1000;
@@ -147,7 +152,13 @@ class Game {
     this.ctx.save();
     this.ctx.translate(paddingLeft, paddingTop);
 
+    
+
     this.children.forEach(ch => ch.render(this.ctx));
+
+    if( this.state == 4 ){
+      this.ctx.drawImage(this.clearImage, 0, 0);
+    }
 
     this.ctx.restore();
 
@@ -222,6 +233,7 @@ class Game {
       }
     } else if (this.state === 4) {
       
+
     }
     this.key.update(this.keys);
     requestAnimationFrame(this.update.bind(this));

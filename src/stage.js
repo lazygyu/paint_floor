@@ -11,6 +11,7 @@ class Stage{
     this.tiles = [];
     this.img = new Image();
     this.img.src = stageImageSrc;
+    
     this.level = level || 1;
     this.time = stageData[this.level - 1].time;
 
@@ -70,9 +71,7 @@ class Stage{
   }
 
   render(ctx) {
-    
     ctx.drawImage(this.canvas, 0, 0);
-    
   }
 
   isClear() {
