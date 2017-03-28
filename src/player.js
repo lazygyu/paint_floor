@@ -96,9 +96,9 @@ class Player{
     } else {
       var w = (this.targetX - this.x) * config.tile_size;
       var h = (this.targetY - this.y) * config.tile_size;
-      this.rx = (this.x * config.tile_size) + (w * this.elapsed / 0.15);
-      this.ry = (this.y * config.tile_size) + (h * this.elapsed / 0.15);
-      if (this.elapsed >= 0.15) {
+      this.rx = (this.x * config.tile_size) + (w * this.elapsed / 0.125);
+      this.ry = (this.y * config.tile_size) + (h * this.elapsed / 0.125);
+      if (this.elapsed >= 0.125) {
         this.x = this.targetX;
         this.y = this.targetY;
         this.rx = this.x * config.tile_size;
